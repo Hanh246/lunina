@@ -8,7 +8,6 @@ import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.apache.catalina.User;
 
 @Entity
 @Data
@@ -17,7 +16,8 @@ import org.apache.catalina.User;
 @EqualsAndHashCode(callSuper = true)
 public class CartItems extends BaseEntity {
     @ManyToOne
-    private User user;
+    @JoinColumn(name = "user_id")
+    private Users user;
 
     @ManyToOne
     private Products product;

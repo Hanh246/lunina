@@ -1,7 +1,7 @@
 package com.source.lunina.common.dto.pagination;
 
-import com.exe201.tutorlink.common.entity.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.source.lunina.common.entity.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Min;
 import lombok.Data;

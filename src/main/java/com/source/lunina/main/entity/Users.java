@@ -2,10 +2,8 @@ package com.source.lunina.main.entity;
 
 import com.source.lunina.common.entity.BaseEntity;
 import com.source.lunina.main.constants.RankEnum;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Table;
+import com.source.lunina.main.constants.RoleEnum;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -21,7 +19,6 @@ import java.util.List;
 @Table(name = "Users")
 @EqualsAndHashCode(callSuper = true)
 public class Users extends BaseEntity implements UserDetails {
-    private String username;
     private String passwordHash;
     private String fullName;
     private String email;
@@ -31,9 +28,10 @@ public class Users extends BaseEntity implements UserDetails {
     private Integer points = 0; // Điểm tích lũy (nếu cần)
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "user_rank")
     private RankEnum rank = RankEnum.NORMAL; // Mặc định là khách mới
 
-    private String role;
+    private RoleEnum role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
