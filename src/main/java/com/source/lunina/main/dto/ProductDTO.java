@@ -15,5 +15,9 @@ public class ProductDTO {
     private Double basePrice;
     private String imageUrl;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Long categoryId;
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private CategoriesDTO category;
 }

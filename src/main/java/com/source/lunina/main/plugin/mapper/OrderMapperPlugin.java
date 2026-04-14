@@ -19,4 +19,18 @@ public class OrderMapperPlugin extends AbstractMapperPlugin<Orders, OrderDTO, Lo
         return List.of("name");
     }
 
+    @Override
+    public OrderDTO toDto(Orders model) {
+        if (model == null) return null;
+
+        // Gọi hàm toDto của lớp cha để map các trường cơ bản
+        OrderDTO dto = super.toDto(model);
+
+        // Gán userId thủ công từ quan hệ ManyToOne
+        if (model.getUser() != null) {
+            dto.setUserId(model.getUser().getId());
+        }
+
+        return dto;
+    }
 }
