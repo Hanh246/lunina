@@ -25,7 +25,7 @@ public class Users extends BaseEntity implements UserDetails {
     private String address; // Địa chỉ mặc định
 
     private Double totalSpending = 0.0; // Tổng tiền đã mua để xét hạng
-    private Integer points = 0; // Điểm tích lũy (nếu cần)
+    private Double points = 0.0; // Điểm tích lũy (nếu cần)
 
     @Enumerated(EnumType.STRING)
     @Column(name = "user_rank")

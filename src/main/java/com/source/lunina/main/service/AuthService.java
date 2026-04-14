@@ -1,5 +1,6 @@
 package com.source.lunina.main.service;
 
+import com.source.lunina.main.constants.RankEnum;
 import com.source.lunina.main.constants.RoleEnum;
 import com.source.lunina.main.dto.LoginDTO;
 import com.source.lunina.main.dto.UserDTO;
@@ -26,6 +27,7 @@ public class AuthService {
         // Mã hóa mật khẩu trước khi lưu vào DB
         user.setPasswordHash(passwordEncoder.encode(password));
         user.setRole(RoleEnum.CUSTOMER);
+        user.setRank(RankEnum.NORMAL);
 
         Users savedUser = userRepository.save(user);
         return modelMapper.map(savedUser, UserDTO.class);

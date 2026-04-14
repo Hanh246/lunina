@@ -16,11 +16,15 @@ public class UserDTO {
     private String email;
     private String address; // Địa chỉ mặc định
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Double totalSpending = 0.0; // Tổng tiền đã mua để xét hạng
-    private Integer points = 0; // Điểm tích lũy (nếu cần)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Double points = 0.0; // Điểm tích lũy (nếu cần)
 
     @Enumerated(EnumType.STRING)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private RankEnum rank = RankEnum.NORMAL; // Mặc định là khách mới
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String role;
 }
