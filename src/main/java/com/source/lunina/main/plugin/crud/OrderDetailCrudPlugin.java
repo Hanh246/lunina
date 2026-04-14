@@ -12,15 +12,23 @@ import org.springframework.plugin.core.PluginRegistry;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Component
 public class OrderDetailCrudPlugin extends AbstractCrudPlugin<OrderDetail, OrderDetailDTO, Long, PaginationSearchDTO> {
 
     private final ProductVariantCrudPlugin productVariantCrudPlugin;
+    private final IOrderDetailRepository repository;
     protected OrderDetailCrudPlugin(IOrderDetailRepository repository,
                                     PluginRegistry<IMapperPlugin, Class<?>> pluginRegistry,
                                     ProductVariantCrudPlugin productVariantCrudPlugin) {
         super(repository, pluginRegistry, OrderDetail.class);
+        this.repository = repository;
         this.productVariantCrudPlugin = productVariantCrudPlugin;
+    }
+
+    public List<OrderDetailDTO> findByOrderID(Long orderId) {
+        return repository.findByOrderID(orderId).stream().map(plugin::toDto).toList();
     }
 
     @Override

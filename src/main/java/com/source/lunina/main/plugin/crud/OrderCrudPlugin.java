@@ -5,6 +5,7 @@ import com.source.lunina.common.dto.pagination.PaginationSearchDTO;
 import com.source.lunina.common.plugin.AbstractCrudPlugin;
 import com.source.lunina.common.plugin.IMapperPlugin;
 import com.source.lunina.main.dto.OrderDTO;
+import com.source.lunina.main.dto.OrderFullDTO;
 import com.source.lunina.main.dto.UserDTO;
 import com.source.lunina.main.entity.Orders;
 import com.source.lunina.main.entity.Users;
@@ -22,12 +23,15 @@ public class OrderCrudPlugin extends AbstractCrudPlugin<Orders, OrderDTO, Long, 
 
     private final UserService userService;
     private final IOrderRepository repository;
+    private final OrderDetailCrudPlugin orderDetailCrudPlugin;
     protected OrderCrudPlugin(IOrderRepository repository,
                               PluginRegistry<IMapperPlugin, Class<?>> pluginRegistry,
-                              UserService userService) {
+                              UserService userService,
+                              OrderDetailCrudPlugin orderDetailCrudPlugin) {
         super(repository, pluginRegistry, Orders.class);
         this.userService = userService;
         this.repository = repository;
+        this.orderDetailCrudPlugin = orderDetailCrudPlugin;
     }
 
     public Page<OrderDTO> findByUserID(PaginationDTO paginationDTO, Long uid) {
@@ -84,5 +88,11 @@ public class OrderCrudPlugin extends AbstractCrudPlugin<Orders, OrderDTO, Long, 
 
         Orders savedModel = repository.save(updatedModel);
         return plugin.toDto(savedModel);
+    }
+
+    public OrderFullDTO createOrderFull(OrderFullDTO dto) {
+        this.create(dto.getOrder());
+        dto.getOrderDetails().forEach(orderDetailCrudPlugin::create);
+        return dto;
     }
 }

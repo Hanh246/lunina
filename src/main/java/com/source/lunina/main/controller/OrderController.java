@@ -4,16 +4,16 @@ import com.source.lunina.common.controller.BaseController;
 import com.source.lunina.common.dto.pagination.PaginationDTO;
 import com.source.lunina.common.dto.pagination.PaginationMetadata;
 import com.source.lunina.common.dto.pagination.PaginationSearchDTO;
+import com.source.lunina.common.dto.response.BaseResponse;
 import com.source.lunina.common.dto.response.PaginationResponse;
 import com.source.lunina.main.dto.OrderDTO;
+import com.source.lunina.main.dto.OrderFullDTO;
 import com.source.lunina.main.entity.Orders;
 import com.source.lunina.main.plugin.crud.OrderCrudPlugin;
 import jakarta.validation.Valid;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -43,5 +43,17 @@ public class OrderController extends BaseController<Orders, OrderDTO, Long, Pagi
                         .success(true)
                         .data(data.toList())
                         .build());
+    }
+
+    @PostMapping("/create-order")
+    public ResponseEntity<BaseResponse<OrderFullDTO>> createOrder(@RequestBody OrderFullDTO orderDTO) {
+        var data = crudPlugin.createOrderFull(orderDTO);
+        BaseResponse<OrderFullDTO> response = BaseResponse.<OrderFullDTO>builder()
+                .success(true)
+                .data(data)
+                .message("Tạo đơn hàng thành công")
+                .build();
+
+        return ResponseEntity.ok(response);
     }
 }
