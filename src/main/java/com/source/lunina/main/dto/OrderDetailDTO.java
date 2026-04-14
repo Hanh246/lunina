@@ -1,13 +1,6 @@
 package com.source.lunina.main.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.source.lunina.main.constants.RankEnum;
-import com.source.lunina.main.entity.ProductVariants;
-import com.source.lunina.main.entity.Products;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,8 +10,16 @@ public class OrderDetailDTO {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
 
+    private Long orderId;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Long productId;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private ProductDTO product;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Long variantId;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private ProductVariantDTO variant;
 
     private Integer quantity;
