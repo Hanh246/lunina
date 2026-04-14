@@ -1,13 +1,6 @@
 package com.source.lunina.main.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.source.lunina.main.constants.RankEnum;
-import com.source.lunina.main.entity.ProductVariants;
-import com.source.lunina.main.entity.Products;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.catalina.User;
@@ -19,10 +12,17 @@ public class CartItemDTO {
     private Long id;
 
     private User user;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Long productId;
 
-    private Products product;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private ProductDTO product;
 
-    private ProductVariants variant;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Long variantId;
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private ProductVariantDTO variant;
 
     private Integer quantity;
 }
