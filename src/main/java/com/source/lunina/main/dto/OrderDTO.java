@@ -1,6 +1,7 @@
 package com.source.lunina.main.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.source.lunina.main.constants.OrderStatusEnum;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,4 +18,6 @@ public class OrderDTO {
     private String deliveryAddress;
     private Double totalAmount; // Tổng tiền sau khi đã trừ chiết khấu hạng thẻ
     private Double discountApplied;
+
+    private OrderStatusEnum status;
 }
