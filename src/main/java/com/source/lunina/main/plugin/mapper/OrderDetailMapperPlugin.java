@@ -47,7 +47,7 @@ public class OrderDetailMapperPlugin extends AbstractMapperPlugin<OrderDetail, O
         }
 
         if (dto.getVariantId() != null) {
-            ProductVariants pro = productVariantRepository.findById(dto.getProductId())
+            ProductVariants pro = productVariantRepository.findById(dto.getVariantId())
                     .orElseThrow(() -> new EntityNotFoundException("Product not found"));
             model.setVariant(pro);
         }

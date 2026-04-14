@@ -34,14 +34,14 @@ public class OrderDetailCrudPlugin extends AbstractCrudPlugin<OrderDetail, Order
     @Override
     @Transactional
     public OrderDetailDTO create(OrderDetailDTO dto) throws RuntimeException {
-        ProductVariantDTO variantDTO = productVariantCrudPlugin.read(dto.getVariant().getId())
+        ProductVariantDTO variantDTO = productVariantCrudPlugin.read(dto.getVariantId())
                 .orElseThrow(() -> new RuntimeException("Biến thể sản phẩm không tồn tại!"));
 
         if (variantDTO.getStock() < dto.getQuantity()) {
             throw new RuntimeException("Số lượng sản phẩm trong kho không đủ (Hiện còn: " + variantDTO.getStock() + ")");
         }
         variantDTO.setStock(variantDTO.getStock() - dto.getQuantity());
-        productVariantCrudPlugin.update(dto.getVariant().getId(), variantDTO);
+        productVariantCrudPlugin.update(dto.getVariantId(), variantDTO);
 
        return super.create(dto);
     }
@@ -54,7 +54,7 @@ public class OrderDetailCrudPlugin extends AbstractCrudPlugin<OrderDetail, Order
                 .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy chi tiết đơn hàng id: " + id));
 
         Long oldVariantId = existingDetail.getVariant().getId();
-        Long newVariantId = dto.getVariant().getId();
+        Long newVariantId = dto.getVariantId();
         int oldQty = existingDetail.getQuantity();
         int newQty = dto.getQuantity();
 
