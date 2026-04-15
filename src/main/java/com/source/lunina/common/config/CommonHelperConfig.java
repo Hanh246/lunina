@@ -15,7 +15,9 @@ public class CommonHelperConfig {
     public ModelMapper modelMapper() {
         ModelMapper mapper = new ModelMapper();
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT)
-                .setCollectionsMergeEnabled(true);
+                .setCollectionsMergeEnabled(true)
+                .setSkipNullEnabled(true)
+                .setPropertyCondition(Conditions.isNotNull());
 
         Provider<Date> dateProvider = new AbstractProvider<Date>() {
             @Override

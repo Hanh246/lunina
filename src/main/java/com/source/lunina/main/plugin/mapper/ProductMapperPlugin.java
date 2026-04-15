@@ -38,4 +38,23 @@ public class ProductMapperPlugin extends AbstractMapperPlugin<Products, ProductD
 
         return model;
     }
+
+    @Override
+    public Products updateModel(Products existingModel, ProductDTO dto) {
+        if (dto == null)
+            return existingModel;
+
+        var id = existingModel.getId();
+        modelMapper.map(dto, existingModel);
+        if (dto.getCategoryId() != null) {
+            Categories cat = categoryRepository.findById(dto.getCategoryId())
+                    .orElseThrow(() -> new EntityNotFoundException("Category not found"));
+            existingModel.setCategory(cat);
+        }
+        existingModel.setId(id);
+        // Perform any custom update logic
+        performCustomUpdate(existingModel, dto);
+
+        return existingModel;
+    }
 }

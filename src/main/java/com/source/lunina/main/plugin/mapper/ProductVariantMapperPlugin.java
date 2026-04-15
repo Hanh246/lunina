@@ -53,4 +53,23 @@ public class ProductVariantMapperPlugin extends AbstractMapperPlugin<ProductVari
 
         return dto;
     }
+
+    @Override
+    public ProductVariants updateModel(ProductVariants existingModel, ProductVariantDTO dto) {
+        if (dto == null)
+            return existingModel;
+
+        var id = existingModel.getId();
+        modelMapper.map(dto, existingModel);
+        if (dto.getProductId() != null) {
+            Products pro = productRepository.findById(dto.getProductId())
+                    .orElseThrow(() -> new EntityNotFoundException("Product not found"));
+            existingModel.setProduct(pro);
+        }
+        existingModel.setId(id);
+        // Perform any custom update logic
+        performCustomUpdate(existingModel, dto);
+
+        return existingModel;
+    }
 }
