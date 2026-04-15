@@ -4,6 +4,7 @@ import com.source.lunina.common.dto.pagination.PaginationDTO;
 import com.source.lunina.common.dto.pagination.PaginationSearchDTO;
 import com.source.lunina.common.plugin.AbstractCrudPlugin;
 import com.source.lunina.common.plugin.IMapperPlugin;
+import com.source.lunina.main.constants.RankEnum;
 import com.source.lunina.main.dto.OrderDTO;
 import com.source.lunina.main.dto.OrderFullDTO;
 import com.source.lunina.main.dto.UserDTO;
@@ -50,6 +51,7 @@ public class OrderCrudPlugin extends AbstractCrudPlugin<Orders, OrderDTO, Long, 
 
         userDTO.setTotalSpending(userDTO.getTotalSpending() + dto.getTotalAmount());
         userDTO.setPoints(userDTO.getTotalSpending() / 10000);
+        updateUserRank(userDTO);
         userService.updateUser(dto.getUserId(), userDTO);
         model.setUser(userService.toModel(userDTO));
 
@@ -76,7 +78,7 @@ public class OrderCrudPlugin extends AbstractCrudPlugin<Orders, OrderDTO, Long, 
             userDTO.setTotalSpending(userDTO.getTotalSpending() + amountDifference);
             // Tính điểm: ép kiểu về Long/Integer nếu cần
             userDTO.setPoints(userDTO.getTotalSpending() / 10000);
-
+            updateUserRank(userDTO);
             userService.updateUser(userDTO.getId(), userDTO);
         }
 
@@ -94,5 +96,24 @@ public class OrderCrudPlugin extends AbstractCrudPlugin<Orders, OrderDTO, Long, 
         this.create(dto.getOrder());
         dto.getOrderDetails().forEach(orderDetailCrudPlugin::create);
         return dto;
+    }
+
+    private void updateUserRank(UserDTO userDTO) {
+        double total = userDTO.getTotalSpending();
+        RankEnum newRank;
+
+        if (total >= 50000000) { // 50 Triệu
+            newRank = RankEnum.DIAMOND;
+        } else if (total >= 20000000) { // 20 Triệu
+            newRank = RankEnum.GOLD;
+        } else if (total >= 10000000) { // 10 Triệu
+            newRank = RankEnum.SILVER;
+        } else if (total >= 5000000) { // 5 Triệu
+            newRank = RankEnum.COPPER;
+        } else {
+            newRank = RankEnum.NORMAL;
+        }
+
+        userDTO.setRank(newRank);
     }
 }
