@@ -16,6 +16,8 @@ public class ProductVariantDTO {
     private Double price;     // Giá bán riêng cho sự kết hợp này (nếu có)
     private Integer stock;    // Số lượng tồn kho cho đúng cặp Size-Màu này
 
+    private Long productId;
+
     // Ảnh riêng cho màu đó (Shopee thường thay đổi ảnh khi bạn chọn màu)
     private String variantImageUrl;
 }
