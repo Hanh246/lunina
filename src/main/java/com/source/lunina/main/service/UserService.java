@@ -12,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -53,6 +55,13 @@ public class UserService {
         }
 
         return data;
+    }
+
+    // Trong UserService.java
+    public List<UserDTO> getAllUsers() {
+        return userRepository.findAll().stream()
+                .map(modelMapper::toDto)
+                .toList();
     }
 
     public Users toModel(UserDTO dto) {
