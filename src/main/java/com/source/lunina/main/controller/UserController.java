@@ -21,6 +21,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 @RestController
 @RequestMapping("/user")
@@ -85,6 +86,7 @@ public class UserController {
     public void exportToExcel(HttpServletResponse response) throws IOException {
         response.setContentType("application/octet-stream");
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        dateFormatter.setTimeZone(TimeZone.getTimeZone("Asia/Ho_Chi_Minh"));
         String currentDateTime = dateFormatter.format(new Date());
 
         String headerKey = "Content-Disposition";
