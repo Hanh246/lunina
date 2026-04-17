@@ -8,8 +8,8 @@ public enum RankEnum {
     NORMAL(0, "Thường"),
     COPPER(1, "Đồng"),
     SILVER(2, "Bạc"),
-    GOLD(4, "Vàng"),
-    DIAMOND(3, "Kim cương");
+    GOLD(3, "Vàng"),
+    DIAMOND(4, "Kim cương");
 
     private final int value;
     private final String label;
