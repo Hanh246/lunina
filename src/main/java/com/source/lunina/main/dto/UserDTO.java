@@ -23,7 +23,7 @@ public class UserDTO {
 
     @Enumerated(EnumType.STRING)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private RankEnum rank = RankEnum.NORMAL; // Mặc định là khách mới
+    private RankEnum rank; // Mặc định là khách mới
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String role;
